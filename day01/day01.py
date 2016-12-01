@@ -7,10 +7,12 @@ http://adventofcode.com/2016/day/1
 """
 
 
-def position_from_instructions(instructions):
+def position_from_instructions(instructions, path=None):
+    """
+    Find out what position we're at after following a set of instructions.
+    """
     x = y = 0
     heading = 0 # 0 = N, 1 = E, 2 = S, 3 = W
-    path = [(0, 0)]
 
     instructions = instructions.split(', ')
 
@@ -34,27 +36,33 @@ def position_from_instructions(instructions):
                 y -= 1
             elif heading == 3:
                 x -= 1
-            path.append((x, y))
+            if path is not None:
+                path.append((x, y))
 
     #print((x,y))
-    return (x, y), path
+    return (x, y)
 
 
-def distance_from_position(position):
+def distance_from_origin(position):
+    """
+    Get the 'taxicab geometry' distance of a position from the origin (0, 0).
+    """
     return sum([abs(x) for x in position])
 
 
 if __name__ == '__main__':
     with open('input.txt') as f:
         instructions = f.read()
-        position, path = position_from_instructions(instructions)
-        distance = distance_from_position(position)
+
+        path = [(0, 0)]
+        position = position_from_instructions(instructions, path)
+        distance = distance_from_origin(position)
         print("Part 1:", distance)
 
         positions_seen = {}
         for pos in path:
             if pos in positions_seen:
-                distance = distance_from_position(pos)
+                distance = distance_from_origin(pos)
                 print("Part 2:", distance)
                 break
             else:
