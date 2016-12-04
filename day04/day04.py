@@ -40,7 +40,7 @@ def sum_of_sectors(rooms):
 
 def decrypt_room_name(room):
     name, sector_id, checksum = parse_room(room)
-    for i in range(sector_id):
+    for i in range(sector_id % 26):
         name = ''.join([
             chr(ord(x)+1) if x != 'z' else 'a'
             for x in name])
