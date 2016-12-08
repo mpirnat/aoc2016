@@ -20,12 +20,8 @@ def init_screen(num_rows, num_cols):
 
 
 def do_command(command, screen):
-    #print('\n', command)
     function, args = parse_command(command)
     screen = function(screen, *args)
-    #display(screen)
-    #print("Lit: ", count_lit_pixels(screen))
-    #input('')
     return screen
 
 
@@ -92,7 +88,7 @@ def count_lit_pixels(screen):
 
 
 def display(screen):
-    print('\n'.join(''.join('#' if p else ' '  for p in row) for row in screen))
+    print('\n'.join(''.join('#' if p else ' ' for p in row) for row in screen))
 
 
 if __name__ == '__main__':
