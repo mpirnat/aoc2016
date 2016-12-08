@@ -51,13 +51,11 @@ def rect(screen, cols, rows):
     rect AxB turns on all of the pixels in a rectangle at the top-left of the
     screen which is A wide and B tall.
     """
-    new_screen = copy.deepcopy(screen)
-
     for i in range(rows):
         for j in range(cols):
-            new_screen[i][j] = True
+            screen[i][j] = True
 
-    return new_screen
+    return screen
 
 
 def rotate_row(screen, row, by):
@@ -66,12 +64,10 @@ def rotate_row(screen, row, by):
     right by B pixels. Pixels that would fall off the right end appear at the
     left end of the row.
     """
-    new_screen = copy.deepcopy(screen)
-
     for i in range(by):
-        new_screen[row].insert(0, new_screen[row].pop())
+        screen[row].insert(0, screen[row].pop())
 
-    return new_screen
+    return screen
 
 
 def rotate_column(screen, col, by):
@@ -80,15 +76,15 @@ def rotate_column(screen, col, by):
     column) down by B pixels. Pixels that would fall off the bottom appear at
     the top of the column.
     """
-    new_screen = copy.deepcopy(screen)
+    column = [row[col] for row in screen]
 
     for i in range(by):
-        for row in range(len(screen)):
-            new_screen[row][col] = screen[row-1][col]
-        screen = new_screen
-        new_screen = copy.deepcopy(screen)
+        column.insert(0, column.pop())
 
-    return new_screen
+    for row in screen:
+        row[col] = column.pop(0)
+
+    return screen
 
 
 def count_lit_pixels(screen):
