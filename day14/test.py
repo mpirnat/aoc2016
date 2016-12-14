@@ -13,6 +13,12 @@ class TestFindingKeys(unittest.TestCase):
         self.assertEqual(keys[1][0], 92)
         self.assertEqual(keys[63][0], 22728, keys)
 
+    def test_finds_stretched_keys(self):
+        salt = 'abc'
+        keys = find_keys(salt, max_keys=64, stretch=2016)
+        self.assertEqual(keys[0][0], 10)
+        self.assertEqual(keys[63][0], 22551, keys)
+
 
 if __name__ == '__main__':
     unittest.main()
