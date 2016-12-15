@@ -49,3 +49,9 @@ if __name__ == '__main__':
     with open('input.txt') as f:
         discs = discs_from_input(f)
         print("Part 1:", find_time_to_push(discs))
+
+        discs.append(Disc(
+                name=discs[-1].name+1,
+                num_pos=11,
+                start_pos=0))
+        print("Part 2:", find_time_to_push(discs))
