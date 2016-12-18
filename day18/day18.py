@@ -6,38 +6,30 @@ Solve day 18 of Advent of Code.
 http://adventofcode.com/2016/day/18
 
 Another one where I could probably optimize part 2, but it would take longer
-than just running the naïve implementation.
+than just running this naïve implementation.
 """
 
 SAFE = '.'
 TRAP = '^'
 
+
 def next_row(row):
     new_row = ''
     num_tiles = len(row)
+
     for i in range(num_tiles):
-        center = row[i]
         left = row[i-1] if i != 0 else SAFE
         right = row[i+1] if i < num_tiles-1 else SAFE
-
-        rules = {
-            (TRAP, TRAP, SAFE): TRAP,
-            (SAFE, TRAP, TRAP): TRAP,
-            (TRAP, SAFE, SAFE): TRAP,
-            (SAFE, SAFE, TRAP): TRAP,
-        }
-
-        new_row += rules.get((left, center, right), SAFE)
+        new_row += SAFE if left == right else TRAP
 
     return new_row
 
 
 def count_safe_tiles(row, total_rows):
-    safe_tiles = row.count(SAFE)
-    for i in range(total_rows - 1):
-        new_row = next_row(row)
-        safe_tiles += new_row.count(SAFE)
-        row = new_row
+    safe_tiles = 0
+    for i in range(total_rows):
+        safe_tiles += row.count(SAFE)
+        row = next_row(row)
     return safe_tiles
 
 
