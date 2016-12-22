@@ -17,8 +17,8 @@ class TestMakingNodes(unittest.TestCase):
         nodes = make_nodes(df)
         self.assertEqual(nodes, [
             [Node(name='node-x0-y0', size=87, used=71, avail=16),
-             Node(name='node-x0-y1', size=93, used=72, avail=21)],
-            [Node(name='node-x1-y0', size=86, used=66, avail=20),
+             Node(name='node-x1-y0', size=86, used=66, avail=20)],
+            [Node(name='node-x0-y1', size=93, used=72, avail=21),
              Node(name='node-x1-y1', size=93, used=64, avail=29)]])
 
 

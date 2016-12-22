@@ -18,7 +18,6 @@ df_regex = re.compile(r'(node-x(\d+)-y(\d+))\s+'
 
 def make_nodes(df):
     grid = [[]]
-    row_num = 0
 
     for line in df.splitlines():
         items = df_regex.findall(line)
@@ -29,12 +28,10 @@ def make_nodes(df):
         items = [int(x) if x.isdigit() else x for x in items[0]]
         name, x, y, size, used, avail, percent = items
 
-
-        if x > row_num:
+        if y > len(grid)-1:
             grid.append([])
-            row_num = x
 
-        grid[-1].append(Node(name=name, size=size, used=used, avail=avail))
+        grid[y].append(Node(name=name, size=size, used=used, avail=avail))
 
     return grid
 
@@ -55,9 +52,30 @@ def viable_nodes(grid):
     return pairs
 
 
+def print_grid(grid):
+    s = ''
+    for i, row in enumerate(grid):
+        for j, node in enumerate(row):
+            if i == 0 and j == 0:
+                s += 'O'
+            elif node.size > 400:
+                s += '#'
+            elif node.used == 0:
+                s += '_'
+            elif i == 0 and j == len(grid[0]) -1:
+                s += 'G'
+            else:
+                s += '.'
+        else:
+            s += '\n'
+    print(s)
+
+
 if __name__ == '__main__':
     with open('input.txt') as f:
         grid = make_nodes(f.read())
         pairs = viable_nodes(grid)
         print("Part 1:", len(pairs))
 
+        print("Part 2: here's a map, go count steps")
+        print_grid(grid)
